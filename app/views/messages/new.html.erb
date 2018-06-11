@@ -1,18 +1,23 @@
 <div class="mt-5 container">
   <div class="p-3 mb-2 bg-dark text-white">
     <h1>Secret Message</h1>
-    <form>
+    
+    <%= form_for(@message) do |f| %>
+      
       <div class="form-group">
-        <label for="exampleMessage">Message</label>
-        <textarea class="form-control" id="exampleMessage" aria-describedby="messageHelp" placeholder="Type your secret message here" rows="10"></textarea>
-        <small id="emailHelp" class="form-text text-light">This is a secret messaging service. Your messages are automatically deleted once retrieved.</small>
+        <%= f.label :message_body, "Message" %>
+        <%= f.text_area :message_body, class: "form-control", rows: "10", placeholder: "Type your secret message here" %>
+        <small class="form-text text-light">This is a secret messaging service. Your messages are automatically deleted once retrieved.</small>
       </div>
       <div class="form-group">
-        <label for="exampleInputPassword">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Enter a password">
-        <small id="emailHelp" class="form-text text-light">You must use this password to retrieve this message.</small>
+        <%= f.label :password, "Password" %>
+        <%= f.password_field :password, class: "form-control", placeholder: "Enter a password" %>
+        <small class="form-text text-light">You must use this encrypted password to retrieve this message.</small>
       </div>
-      <button type="submit" class="btn btn-success">Create</button>
-    </form>
+
+      <%= f.submit "Create", class: "btn btn-success" %>
+
+    <% end %>
   </div>
 </div>
+  
