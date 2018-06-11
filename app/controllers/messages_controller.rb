@@ -6,7 +6,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    if @message.save
+    if @message.save!
       Rails.logger.info("Message token: #{@message.token}")
       flash[:notice] = "Thank you, your message has been saved. It's token is #{@message.token}."
     else

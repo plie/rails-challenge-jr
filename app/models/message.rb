@@ -3,10 +3,10 @@ require 'bcrypt'
 class Message < ApplicationRecord
   include BCrypt
 
-  has_secure_token key_length: 30
+  has_secure_token key_length: 20
 
   validates :token, presence: true, uniqueness: true
-  validates :text, presence: true
+  validates :message_body, presence: true
   validates :password, presence: true
 
   def password
