@@ -9,9 +9,12 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
-      flash[:notice] = "Thank you, your message has been saved. It's token is #{@message.token}."
+      flash[:success] = "Thank you, your message has been saved. It's token is #{@message.token}."
+      p "Here is your token: #{@message.token}"
+      redirect_to messages_path
     else
-      flash[:error] = 'Need to create a valid password. Message not saved. Please try again.'
+      flash[:danger] = 'Need to create a valid password. Message not saved. Please try again.'
+      redirect_to messages_path
     end
   end
 
@@ -23,7 +26,7 @@ class MessagesController < ApplicationController
     if @message && @message.password == params[:password]
       redirect_to display_path
     else
-      flash[:error] = 'Incorrect password'
+      flash[:danger] = 'Incorrect password'
       redirect_to unlock_path
     end
     @message.destroy
