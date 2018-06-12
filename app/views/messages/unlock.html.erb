@@ -1,0 +1,18 @@
+<div class="mt-5 container">
+  <div class="p-3 mb-2 bg-dark text-white">
+    <h1>Secret Message</h1>
+    <h3>Unlock your message.</h3>
+    <%= form_for(@message) do |f| %>
+      
+      <div class="form-group">
+        <%= f.label :password, "Password" %>
+        <%= f.password_field :password, class: "form-control", placeholder: "Enter your password" %>
+        <small class="form-text text-light">Enter the password to unlock your message.</small>
+      </div>
+
+      <%= f.submit "Unlock", class: "btn btn-success" %>
+
+    <% end %>
+  </div>
+</div>
+  

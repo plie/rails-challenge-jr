@@ -22,14 +22,15 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message = Message.find(:token)
+    @message = Message.where(token: params[:token]).first
+    p "Here is your message: #{params[:token]}"
     if @message && @message.password == params[:password]
       redirect_to display_path
+      @message.destroy  # destroy message when viewed and only when viewed
     else
       flash[:danger] = 'Incorrect password'
       redirect_to unlock_path
     end
-    @message.destroy
   end
 
   private
