@@ -2,12 +2,14 @@ require 'bcrypt'
 
 class Message < ApplicationRecord
   include BCrypt
+  before_create :generate_token
 
-  has_secure_token key_length: 20
-
-  validates :token, presence: true, uniqueness: true
   validates :message_body, presence: true
   validates :password, presence: true
+
+  def generate_token
+    self.token = SecureRandom.hex(10)
+  end
 
   def password
     @password ||= Password.new(password_hash)

@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class MessagesController < ApplicationController
   before_action :get_message, only: [:new, :unlock]
 
@@ -6,8 +8,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    if @message.save!
-      Rails.logger.info("Message token: #{@message.token}")
+    if @message.save
       flash[:notice] = "Thank you, your message has been saved. It's token is #{@message.token}."
     else
       flash[:error] = 'Need to create a valid password. Message not saved. Please try again.'
@@ -35,6 +36,6 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:password, :token, :message_body)
+    params.require(:message).permit(:token, :password, :message_body)
   end
 end
