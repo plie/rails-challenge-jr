@@ -6,24 +6,24 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    if @message.save
+    if @message.password != '' && @message.save
       flash[:success] = "Thank you, your message has been saved. Here is your URL: /#{@message.token}/YourPasswordHere."
       p "Here is your token: #{@message.token}"
       redirect_to messages_path
     else
-      flash[:danger] = 'Need to create a valid password. Message not saved. Please try again.'
+      flash[:danger] = 'Message not saved. Need to create a valid password. Please try again.'
       redirect_to messages_path
     end
   end
 
   def show
-    message = Message.find_by_token!(params[:token])
+    message = Message.find_by_token(params[:token])
     if message.password == params[:password]
       @message = message
-      flash[:danger] = 'This message is deleted automatically. Once you leave this page this message will no longer be available.'
-      @message.destroy  # destroy message when viewed and only when viewed
+      flash[:danger] = 'This message has been deleted. Once you leave this page this message will no longer be available.'
+      @message.destroy
     else
-      flash[:danger] = 'the condition failed in #show'
+      flash[:danger] = 'Please use a valid password and token, using this URL format: /token/password.'
     end
   end
 
@@ -34,6 +34,6 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:token, :password, :message_body)
+    params.require(:message).permit(:password, :message_body)
   end
 end
