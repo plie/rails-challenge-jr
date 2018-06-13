@@ -3,6 +3,6 @@ Rails.application.routes.draw do
   root 'messages#new'
 
   post '/', to: 'messages#create', as: :messages
-  get '/:token', to: 'messages#show', as: :display
+  get '/:token/:password', to: 'messages#show', as: :display
 
 end

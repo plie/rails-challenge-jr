@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
-      flash[:success] = "Thank you, your message has been saved. It's token is #{@message.token}."
+      flash[:success] = "Thank you, your message has been saved. Here is your URL: /#{@message.token}/YourPasswordHere."
       p "Here is your token: #{@message.token}"
       redirect_to messages_path
     else
@@ -17,14 +17,13 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message = Message.where(token: params[:token]).first
-    p "Here is your message: #{params[:token]}"
-    if @message && @message.password == params[:password]
+    message = Message.find_by_token!(params[:token])
+    if message.password == params[:password]
+      @message = message
       flash[:danger] = 'This message is deleted automatically. Once you leave this page this message will no longer be available.'
-      redirect_to display_path
       @message.destroy  # destroy message when viewed and only when viewed
     else
-      flash[:danger] = 'Incorrect password'
+      flash[:danger] = 'the condition failed in #show'
     end
   end
 
