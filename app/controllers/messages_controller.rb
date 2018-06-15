@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.password != '' && @message.save
-      flash[:success] = "Your message has been saved. Send the heroku app URL to your recipient or unlock here:"
+      flash[:success] = "Your message has been saved. Send the URL to your recipient or unlock below."
       Rails.logger.info("Here is your token: #{@message.token}.")
       redirect_to password_path(@message.token)
     else
