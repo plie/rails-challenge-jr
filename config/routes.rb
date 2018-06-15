@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   get 'messages', to: 'messages#new'
   post 'messages', to: 'messages#create'
-  get '/:token/:password', to: 'messages#show'
+  get '/:token', to: 'messages#password', as: 'password'
+  post '/:token', to: 'messages#show'
 end
